@@ -1,0 +1,94 @@
+/*
+ * License: https://github.com/groovenectar/musiview/blob/master/LICENSE.md
+ * Homepage: https://c.dup.bz
+*/
+
+html {
+	height: 100%;
+	font-size: 16px;
+}
+body {
+	background: radial-gradient(circle, #424242 0%, #2d2d2d 100%) fixed;
+	font-family: sans-serif;
+	min-height: 100%;
+}
+html, body {
+	margin: 0;
+}
+body, a {
+	color: #bfbfbf;
+}
+a:hover {
+	text-decoration: underline;
+	color: #fff;
+}
+body > main {
+	padding-block: 0;
+}
+a {
+	background-color: rgba(0, 0, 0, .2);
+}
+a:hover {
+	background-color: transparent;
+}
+a.button {
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
+	font-size: 1.5rem;
+	font-weight: bold;
+	padding: 1.5rem;
+	border: none;
+	cursor: pointer;
+	opacity: .75;
+	background-color: transparent;
+	text-decoration: none;
+}
+a.button:not(.disabled):hover {
+	opacity: 1;
+}
+footer {
+	text-align: center;
+	padding-bottom: 1.5rem;
+}
+nav {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	padding: 1rem;
+}
+nav > div {
+	width: 100%;
+}
+nav .parent {
+	flex: 1;
+	text-align: center;
+}
+nav .next {
+	text-align: left;
+}
+nav .previous {
+	text-align: right;
+}
+nav .next,
+nav .previous {
+	flex: 2;
+}
+nav .pagination a.button img {
+	width: 1.8rem;
+	height: 1.8rem;
+}
+nav a.button.disabled {
+	opacity: 0.125;
+	cursor: unset;
+}
+footer nav .parent {
+	visibility: hidden;
+}
+.centered-content {
+	display: flex;
+	min-height: 100vh;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+}

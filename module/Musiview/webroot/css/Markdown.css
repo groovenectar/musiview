@@ -1,0 +1,46 @@
+/*
+ * License: https://github.com/groovenectar/musiview/blob/master/LICENSE.md
+ * Homepage: https://c.dup.bz
+*/
+
+h1 {
+	font-size: 1.3rem;
+	padding-bottom: .75rem;
+	border-bottom: 4px solid rgba(191, 191, 191, .5);
+}
+a {
+	word-break: break-all;
+}
+section {
+	border: 2px solid rgba(191, 191, 191, .25);
+	background-color: rgba(25, 25, 25, .65);
+	padding: 0 1rem;
+	max-width: 80vw;
+	text-align: left;
+}
+pre:has(> code) {
+	padding: 1rem;
+	background-color: rgba(0, 0, 0, .2);
+}
+pre:has(> code) > code {
+	display: block;
+	margin: 0;
+	overflow-y: auto;
+}
+code {
+	font-family: 'Ubuntu Mono', 'Courier New', Courier, monospace;
+}
+ol {
+	padding: 0 0 0 2.25rem;
+}
+@media screen and (min-width: 600px) {
+	ol {
+		margin-top: 2rem;
+	}
+}
+@media screen and (min-width: 1000px) {
+	html {
+		font-size: 17px;
+	}
+}
+

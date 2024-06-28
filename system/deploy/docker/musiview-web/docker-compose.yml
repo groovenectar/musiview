@@ -1,0 +1,26 @@
+version: '3.1'
+services:
+  musiview-web:
+    image: 'dupbz/musiview-web:latest'
+    container_name: 'musiview-web'
+    build:
+      context: ../../../..
+      dockerfile: ./system/deploy/docker/musiview-web/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    volumes:
+      - ../../../../collection:/app/collection:rw
+    secrets:
+      - domain_cert
+      - domain_cert_key
+      #- repo_ssh_key
+
+secrets:
+  domain_cert:
+    file: /etc/letsencrypt/live/staging.c.dup.bz/fullchain.pem
+  domain_cert_key:
+    file: /etc/letsencrypt/live/staging.c.dup.bz/privkey.pem
+  #repo_ssh_key:
+    #file: ~/.ssh/id_rsa.repo

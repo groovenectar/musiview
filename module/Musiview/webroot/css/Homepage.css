@@ -1,0 +1,26 @@
+/*
+ * License: https://github.com/groovenectar/musiview/blob/master/LICENSE.md
+ * Homepage: https://c.dup.bz
+*/
+
+.view-collections {
+	text-align: center;
+	font-size: 1.5rem;
+	margin: 5rem 0;
+}
+.centered-content {
+	text-align: left;
+}
+.online::after {
+	content: 'online';
+	color: red;
+	font-size: 60%;
+	border: 1px solid red;
+	padding: 1px 5px;
+	border-radius: 5px;
+	margin-left: 9px;
+	transform: translateY(-2px);
+	display: inline-block;
+	background-color: black;
+	font-weight: bold;
+}

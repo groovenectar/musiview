@@ -1,0 +1,29 @@
+services:
+  musiview-streaming:
+    image: 'dupbz/musiview-streaming:latest'
+    container_name: 'musiview-streaming'
+    build:
+      context: ../../../..
+      dockerfile: ./system/deploy/docker/musiview-streaming/Dockerfile
+    env_file:
+      - ../../../../system/config/.env
+    ports:
+      - "8080:8080"
+      - "4443:4443"
+      - "1936:1936"
+    restart: unless-stopped
+    secrets:
+      - env
+      - domain_cert
+      - domain_cert_key
+      #- repo_ssh_key
+
+secrets:
+  env:
+    file: ../../../../system/config/.env
+  domain_cert:
+    file: /etc/letsencrypt/live/${STREAM_HOST}/fullchain.pem
+  domain_cert_key:
+    file: /etc/letsencrypt/live/${STREAM_HOST}/privkey.pem
+  #repo_ssh_key:
+    #file: ~/.ssh/id_rsa.repo

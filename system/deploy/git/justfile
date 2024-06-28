@@ -1,0 +1,31 @@
+set dotenv-filename := "../../config/.env"
+
+# This list of commands
+help:
+	just --list
+
+# ---
+
+# SSH into repository machine
+ssh *args="":
+	ssh -i ${REPO_LOCAL_SSH_KEY} ${REPO_SSH_USER}@${REPO_SSH_HOST} '{{args}}'
+
+# Push committed changes to remote `origin` https://github.com/lipupini/esunview.git
+push:
+	GIT_SSH_COMMAND="ssh -i ${REPO_LOCAL_SSH_KEY}" git push repo Musiview
+
+# Add SSH key to repository server
+add-ssh-key:
+	ssh-copy-id -i ${REPO_LOCAL_SSH_KEY}.pub ${REPO_SSH_USER}@${REPO_SSH_HOST}
+
+# Send SSH key from prod for repo
+prod-add-ssh-key:
+	cd ../prod && just ssh "ssh-copy-id -i ${PROD_REPO_SSH_KEY}.pub ${REPO_SSH_USER}@${REPO_SSH_HOST}"
+
+# Add remote repository
+add-remote:
+	git remote add repo ssh://${REPO_SSH_USER}@${REPO_SSH_HOST}${REPO_DIRECTORY}
+
+# Add repo remote
+prod-git-add-remote:
+	cd ../prod && just ssh "cd ${PROD_DIRECTORY} && git remote add repo ssh://${REPO_SSH_USER}@${REPO_SSH_HOST}${REPO_DIRECTORY}"

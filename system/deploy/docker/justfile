@@ -1,0 +1,40 @@
+set export
+
+# This list of Docker commands
+help:
+	just --list
+
+# List Docker directories
+ls:
+	ls -d */
+
+# Generate a Docker image from `system/deploy/docker`
+build container:
+	docker compose --file ./{{container}}/docker-compose.yml build
+
+# Run ocker container from generated Docker image
+up container:
+	docker compose --file ./{{container}}/docker-compose.yml up -d
+
+# Restart a Docker image from `system/deploy/docker`
+restart container:
+	docker compose --file ./{{container}}/docker-compose.yml restart
+
+# Stop a Docker image from `system/deploy/docker`
+down container:
+	docker compose --file ./{{container}}/docker-compose.yml down
+
+# SSH into a Docker container
+ssh container *args="/bin/bash":
+	docker exec -it {{container}} "${args}"
+
+# Execute a command inside a docker container
+exec container *args:
+	docker exec {{container}} bash -c "${args}"
+
+# Clear all containers, images, volumes, etc from the system
+delete-everything:
+	docker system prune -a
+
+prune-images:
+	docker image prune -f

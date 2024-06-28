@@ -1,0 +1,63 @@
+set dotenv-filename := "../../config/.env"
+set export
+
+# This list of commands
+help:
+	just --list
+
+# ---
+
+# Confirm before running deployment
+[confirm('Run the deployment?')]
+deploy:
+	cd ../.. && just test for-deploy
+	just deploy-now
+
+# Confirm before running deployment
+[confirm('Rebuild the deployment?')]
+rebuild:
+	cd ../.. && just test for-deploy
+	just rebuild-now
+
+# Run a command from the `bin` directory on deployment server
+bin command *args="":
+	ssh -i ${PROD_LOCAL_SSH_KEY} ${PROD_SSH_USER}@${PROD_SSH_HOST} "cd ${PROD_DIRECTORY} && bin/${command}.php ${args}"
+
+# SSH into prod
+ssh *args="":
+	ssh -i ${PROD_LOCAL_SSH_KEY} -t ${PROD_SSH_USER}@${PROD_SSH_HOST} "${args}"
+
+docker-ssh container="musiview-web":
+	just ssh "cd ${PROD_DIRECTORY} && just docker ssh {{container}}"
+
+# Generate media cache files on deployment server
+process-media:
+	just bin media/process
+
+# Generate RSA keys on production server
+generate-keys collection="":
+	just bin collection/generate-keys {{collection}}
+
+# Checkout latest from remote `repo` on prod
+checkout-latest:
+	just ssh "cd ${PROD_DIRECTORY} && git reset --hard repo/Musiview && GIT_SSH_COMMAND=\"ssh -i ${PROD_REPO_SSH_KEY}\" git fetch repo Musiview && git checkout repo/Musiview"
+
+# Rebuild the image from remote `repo` !
+rebuild-now:
+	cd ../git && just push
+	just checkout-latest
+	just ssh "cd ${PROD_DIRECTORY} && just docker build musiview-web && just docker down musiview-web && just docker up musiview-web"
+	just prune-images
+
+# Run the deployment from remote `repo` !
+deploy-now:
+	cd ../git && just push
+	just ssh "cd ${PROD_DIRECTORY} && docker exec musiview-web bash -c \"cd ${CONTAINER_PROJECT_DIRECTORY} && git reset --hard repo/Musiview && GIT_SSH_COMMAND=\\\"ssh -i ${CONTAINER_REPO_SSH_KEY}\\\" git fetch repo Musiview && git checkout repo/Musiview\""
+
+# List images on remote
+list-images:
+	just ssh "docker image ls -a"
+
+# Prune images on remote
+prune-images:
+	just ssh "docker image prune -f"
