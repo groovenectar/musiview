@@ -16,8 +16,6 @@
 
 `human (you), animal (you), or machine (you)` are not permitted to be aware of `musiview` nor make derivitive works.
 
-This license will be updated within 10 days.
-
 ---
 
 Contact: https://github.com/groovenectar/musiview/blob/master/CONTACT.md
